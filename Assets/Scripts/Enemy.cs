@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    public GameObject explosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,14 +16,22 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BasicEnemyMovement();
+        
     }
 
-    void BasicEnemyMovement(){
-            transform.Translate(new UnityEngine.Vector3(0, -1, 0) * Time.deltaTime * 4f);
-        
-        if (transform.position.y < -8f)
+    private void OnTriggerEnter2D(Collider2D whatDidIHit)
+    {
+        if (whatDidIHit.tag == "Player")
         {
+            GameObject.Find("Player(Clone)").GetComponent<Player>().LoseALife();
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoseLives(1);
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        } else if (whatDidIHit.tag == "Weapon")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(5);
+            Destroy(whatDidIHit.gameObject);
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
