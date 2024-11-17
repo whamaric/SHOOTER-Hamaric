@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2153782974529735693}
   - component: {fileID: 5781422710706435855}
   - component: {fileID: -6246779844321881093}
-  - component: {fileID: 484261116385962766}
   - component: {fileID: 8437192190903104388}
+  - component: {fileID: 2583765663249058513}
   - component: {fileID: -6541069339382514087}
   m_Layer: 0
   m_Name: Enemy
@@ -101,8 +101,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myType: 2
---- !u!61 &484261116385962766
-BoxCollider2D:
+--- !u!50 &8437192190903104388
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581836376663872257}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &2583765663249058513
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,7 +160,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.026916742, y: 0.09710476}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -143,36 +170,53 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.1771636, y: 1.1283836}
-  m_EdgeRadius: 0
---- !u!50 &8437192190903104388
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4581836376663872257}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.45999998, y: -0.34}
+      - {x: 0.38, y: -0.29}
+      - {x: 0.07, y: -0.22}
+      - {x: 0.089999996, y: -0.06}
+      - {x: 0.099999994, y: 0.06}
+      - {x: 0.35, y: 0.06}
+      - {x: 1.05, y: 0.11}
+      - {x: 1.15, y: 0.17}
+      - {x: 1.15, y: 0.26999998}
+      - {x: 1.11, y: 0.29999998}
+      - {x: 0.90999997, y: 0.34}
+      - {x: 0.51, y: 0.38}
+      - {x: 0.51, y: 0.42999998}
+      - {x: 0.48, y: 0.47}
+      - {x: 0.45, y: 0.48}
+      - {x: 0.38, y: 0.48}
+      - {x: 0.19, y: 0.55}
+      - {x: 0.08, y: 0.59}
+      - {x: 0.03, y: 0.65}
+      - {x: -0.089999996, y: 0.65}
+      - {x: -0.14999999, y: 0.51}
+      - {x: -0.25, y: 0.56}
+      - {x: -0.32, y: 0.48}
+      - {x: -0.45, y: 0.51}
+      - {x: -0.58, y: 0.45}
+      - {x: -0.7, y: 0.37}
+      - {x: -1.15, y: 0.31}
+      - {x: -1.1899999, y: 0.28}
+      - {x: -1.1899999, y: 0.17}
+      - {x: -1.18, y: 0.12}
+      - {x: -0.58, y: 0.06}
+      - {x: -0.19, y: 0.06}
+      - {x: -0.12, y: -0.06}
+      - {x: -0.14, y: -0.24}
+      - {x: -0.37, y: -0.26999998}
+      - {x: -0.5, y: -0.34}
+      - {x: -0.48999998, y: -0.39999998}
+      - {x: -0.42, y: -0.45}
+      - {x: -0.12, y: -0.45999998}
+      - {x: -0.04, y: -0.58}
+      - {x: 0.02, y: -0.58}
+      - {x: 0.11, y: -0.45999998}
+      - {x: 0.39, y: -0.45}
+      - {x: 0.45, y: -0.39999998}
+  m_UseDelaunayMesh: 0
 --- !u!114 &-6541069339382514087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,3 +230,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 4910536062124653743, guid: 2d5a9c6137b0b984081abc4ff3157b0e, type: 3}
+  gameManager: {fileID: 0}
+  playerScript: {fileID: 0}

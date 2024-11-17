@@ -43,6 +43,16 @@ public class MovingObject : MonoBehaviour
             //I am a coin
             transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * 4f);
         }
+        else if (myType == 6)
+        {
+            //I am a power up
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * 6f);
+        }
+        else if (myType == 7)
+        {
+            //I am a heart
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * 5f);
+        }
 
         if ((transform.position.x > 10.5f || transform.position.y > 9f ||  transform.position.y <= -9f) && myType != 3)
         //destroys objects out of bounds, including coins going to the right

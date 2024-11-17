@@ -6,11 +6,14 @@ public class Enemy : MonoBehaviour
 {
 
     public GameObject explosion;
+    public GameManager gameManager;
+    public Player playerScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -23,13 +26,12 @@ public class Enemy : MonoBehaviour
     {
         if (whatDidIHit.tag == "Player")
         {
-            GameObject.Find("Player(Clone)").GetComponent<Player>().LoseALife();
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoseLives(1);
+            playerScript.LoseLives();
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         } else if (whatDidIHit.tag == "Weapon")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(5);
+            gameManager.EarnScore(5);
             Destroy(whatDidIHit.gameObject);
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);

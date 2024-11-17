@@ -6,6 +6,7 @@ using TMPro;
 using System.Collections.Specialized;
 using System;
 using System.Diagnostics;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,56 +16,84 @@ public class GameManager : MonoBehaviour
     public GameObject fastEnemy;
     public GameObject cloud;
     public GameObject coin;
+    public GameObject powerUp;
+    public GameObject heart;
+
     private int score;
-    private int lives;
+    public Player playerScript;
+    private bool isPlayerAlive;
+
     private float startDelay = 1.0f;
-    float spawnIntervalEnemy = 0.5f;
-    float spawnIntervalFast = 0.5f;
-    float spawnIntervalCoin = 0.5f;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI powerUpText;
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI restartText;
+  
 
     // Start is called before the first frame update
     void Start()
     {
+        isPlayerAlive = true;
         Instantiate(player, transform.position, Quaternion.identity);
-        Invoke(nameof(CreateEnemy), startDelay);
-        Invoke(nameof(CreateFastEnemy), startDelay * 2);
-        Invoke(nameof(CreateCoin), startDelay * 2);
+        StartCoroutine(CreateEnemy());
+        StartCoroutine(CreateFastEnemy());
+        StartCoroutine(CreateCoin());
+        StartCoroutine(CreatePowerup());
+        StartCoroutine(CreateHeart());
         CreateSky();
         score = 0;
-        lives = 3;
         scoreText.text = "Score: " + score;
-        livesText.text = "Lives: " + lives;
+        livesText.text = "Lives: 3";
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Restart();
     }
 
-    void CreateEnemy()
+   IEnumerator CreateEnemy()
     {
-        spawnIntervalEnemy = UnityEngine.Random.Range(1f, 4f);
+        yield return new WaitForSeconds(startDelay);
         Instantiate(enemy, new Vector3(UnityEngine.Random.Range(-9f, 9f), 7.5f, 0), Quaternion.identity);
-        Invoke(nameof(CreateEnemy), spawnIntervalEnemy);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 4f));
+        StartCoroutine(CreateEnemy());
     }
 
-    void CreateFastEnemy()
+    IEnumerator CreateFastEnemy()
     {
-        spawnIntervalFast = UnityEngine.Random.Range(3f, 6f);
+        yield return new WaitForSeconds(startDelay * 2);
         Instantiate(fastEnemy, new Vector3(UnityEngine.Random.Range(-9f, 9f), 7.5f, 0), Quaternion.identity);
-        //UnityEngine.Debug.Log("Fast Enemy Spawned");
-        Invoke(nameof(CreateFastEnemy), spawnIntervalFast);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 4f));
+        StartCoroutine(CreateFastEnemy());
     }
 
-    void CreateCoin()
+    IEnumerator CreateCoin()
     {
-        spawnIntervalCoin = UnityEngine.Random.Range(5f, 8f);
-        Instantiate(coin, new Vector3(-9.5f, UnityEngine.Random.Range(-4.16f, 0f), 0f), Quaternion.identity);
-        Invoke(nameof(CreateCoin), spawnIntervalCoin);
+        yield return new WaitForSeconds(startDelay * 2);
+        Instantiate(coin, new Vector3(-10.75f, UnityEngine.Random.Range(-4.16f, 0f), 0f), Quaternion.identity);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 6f));
+        StartCoroutine(CreateCoin());
+    }
+
+    IEnumerator CreatePowerup()
+    {
+        yield return new WaitForSeconds(startDelay * 4);
+        Instantiate(powerUp, new Vector3(UnityEngine.Random.Range(-9f, 9f), 7.5f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 5f));
+        StartCoroutine(CreatePowerup());
+    }
+
+    IEnumerator CreateHeart()
+    {
+        yield return new WaitForSeconds(startDelay * 10);
+        Instantiate(heart, new Vector3(UnityEngine.Random.Range(-9f, 9f), 7.5f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 10f));
+        StartCoroutine(CreateHeart());
     }
 
     void CreateSky()
@@ -79,12 +108,36 @@ public class GameManager : MonoBehaviour
     {
         score = score + howMuch;
         scoreText.text = "Score: " + score;
+        finalScoreText.text = "Final Score: " + score;
     }
 
-    public void LoseLives(int howMuch)
+    public void UpdateLivesText(string howManyLives)
     {
-        lives = lives - howMuch;
-        livesText.text = "Lives: " + lives;
+        livesText.text = howManyLives;
+    }
 
+    public void UpdatePowerUpText(string whichPowerUp)
+    {
+        powerUpText.text = whichPowerUp;
+    }
+
+    public void GameOver()
+    {
+        isPlayerAlive = false;
+        StopAllCoroutines();
+        livesText.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        finalScoreText.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
+        restartText.gameObject.SetActive(true);
+    }
+
+    void Restart()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && isPlayerAlive == false)
+        {
+            //Restart the game
+            SceneManager.LoadScene("Game");
+        }
     }
 }
